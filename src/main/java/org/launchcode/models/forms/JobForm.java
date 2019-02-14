@@ -1,5 +1,6 @@
 package org.launchcode.models.forms;
 
+import com.sun.istack.internal.NotNull;
 import org.launchcode.models.CoreCompetency;
 import org.launchcode.models.Employer;
 import org.launchcode.models.Location;
@@ -16,11 +17,29 @@ import java.util.ArrayList;
 public class JobForm {
 
     @NotNull
-    @Size(min=1, message = "Name may not be empty")
+    @Size(min=1, max=21, message = "Name may not be empty or longer than 20")
     private String name;
 
     @NotNull
     private int employerId;
+
+    @NotNull
+    @Size(min=1, message = "Employer may not be empty")
+    private String employer;
+
+    @NotNull
+    @Size(min=1, message = "Location may not be empty")
+    private String location;
+
+    @NotNull
+    @Size(min=1, max=21, message = "The skills needed may not be empty or longer than 20")
+    private String coreCompetency;
+
+    @NotNull
+    @Size(min=1, max=21, message = "The position may not be empty or longer than 20")
+    private String positionType;
+
+
 
     /*
         TODO #3 - Included other fields needed to create a job,
@@ -28,22 +47,6 @@ public class JobForm {
         Don't forget to add getters and setters
      */
 
-    private ArrayList<Employer> employers;
-    private ArrayList<Location> locations;
-    private ArrayList<CoreCompetency> coreCompetencies;
-    private ArrayList<PositionType> positionTypes;
-
-    public JobForm() {
-
-        JobData jobData = JobData.getInstance();
-
-        /*
-            TODO #4 - populate the other ArrayList collections needed in the view
-        */
-
-        employers = jobData.getEmployers().findAll();
-
-    }
 
     public String getName() {
         return name;
@@ -53,17 +56,51 @@ public class JobForm {
         this.name = name;
     }
 
-    public int getEmployerId() {
+    public Integer getEmployerId() {
         return employerId;
     }
 
-    public void setEmployerId(int employerId) {
-        this.employerId = employerId;
-    }
+    public void setEmployerId(Integer employerId) { this.employerId = employerId; }
 
-    public ArrayList<Employer> getEmployers() {
-        return employers;
-    }
+    public String getEmployer() { return employer; }
+
+    public void setEmployer(String employer) { this.employer = employer; }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) {this.location = location; }
+
+    public String getPositionType() { return positionType; }
+
+    public void setPositionType(String positionType) { this.positionType = positionType; }
+
+    public String getCoreCompetency() { return coreCompetency; }
+
+    public void setCoreCompetency(String coreCompetency) { this.coreCompetency = coreCompetency; }
+
+
+
+    public JobForm() {
+
+        JobData jobData = JobData.getInstance();
+
+        /*
+            TODO #4 - populate the other ArrayList collections needed in the view
+        */
+
+        ArrayList<Employer> employers = JobData.getEmployers().findAll();
+
+        ArrayList<Location> locations = JobData.getLocations().findAll();
+
+        ArrayList<CoreCompetency> coreCompetencies = JobData.getCoreCompetencies().findAll();
+
+        ArrayList<PositionType> positionTypes = JobData.getPositionTypes().findAll();
+
+
+
+
+
+    public ArrayList<Employer> getEmployers() { return employers; }
 
     public void setEmployers(ArrayList<Employer> employers) {
         this.employers = employers;
@@ -92,4 +129,6 @@ public class JobForm {
     public void setPositionTypes(ArrayList<PositionType> positionTypes) {
         this.positionTypes = positionTypes;
     }
+}
+
 }
