@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Employer;
 import org.launchcode.models.Job;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
@@ -24,7 +25,7 @@ public class JobController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, int id) {
 
-        model.addAttribute("job", JobData.findById(id));
+        model.addAttribute("job", jobData.findById(id));
         // TODO #1 - get the Job with the given ID and pass it into the view
 
         return "job-detail";
@@ -42,22 +43,17 @@ public class JobController {
         // TODO #6 - Validate the JobForm model, and if valid, create a
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
-        Job newJob = new Job;
-                String addedName = jobForm.getName();
-                String addedEmployer = jobForm.getEmployer();
-                String addedLocation = jobForm.getLocation();
-                String addedPosition = jobForm.getPositionType();
-                String addedCoreCompetency = jobForm.getCoreCompetency();
 
         if (errors.hasErrors()) {
             return "new-job";
         }
 
-            newJob.setName(addedName);
-            newJob.setEmployer(addedEmployer);
-            newJob.setLocation(addedLocation);
-            newJob.setPositionType(addedPosition);
-            newJob.setCoreCompetency(addedCoreCompetency);
+        Job newJob = new Job();
+        newJob.setName(jobForm.getName());
+        newJob.setEmployer(jobForm.getEmployer());
+        newJob.setLocation(jobForm.getLocation());
+        newJob.setPositionType(jobForm.getPositionType());
+        newJob.setCoreCompetency(jobForm.getCoreCompetency());
 
             jobData.add(newJob);
 
